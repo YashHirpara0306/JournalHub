@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JournalHub - Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <i class="fas fa-book-journal-whills"></i>
+            <span>JournalHub</span>
+        </div>
+        <div class="nav-links">
+            <button id="newEntryBtn" class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Entry
+            </button>
+            <div class="user-menu">
+                <button id="userMenuBtn" class="btn btn-secondary">
+                    <i class="fas fa-user"></i>
+                    <span id="username">User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="#" id="profileLink">
+                        <i class="fas fa-user-circle"></i> Profile
+                    </a>
+                    <a href="#" id="settingsLink">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search entries...">
+            </div>
+            
+            <div class="entries-list" id="entriesList">
+                <!-- Entries will be populated here -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="editor-container">
+                <div class="editor-header">
+                    <input type="text" id="titleInput" class="title-input" placeholder="Entry Title">
+                    <div class="editor-meta">
+                        <span id="lastSaved">Not saved yet</span>
+                        <span id="wordCount">0 words</span>
+                    </div>
+                </div>
+                
+                <textarea id="editor" class="content-editor" placeholder="Write your thoughts here..."></textarea>
+                
+                <div class="editor-footer">
+                    <div class="editor-actions">
+                        <button id="saveBtn" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <button id="deleteBtn" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

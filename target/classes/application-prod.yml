@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://Springdb:9913258184@cluster0.objco.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journaldb
+      auto-index-creation: true
+      # Uncomment the following lines if authentication is required
+      # username: "myjournaluser"
+      # password: "mypassword"
+server:
+  port: 8081
+  servlet:
+    context-path: /journal

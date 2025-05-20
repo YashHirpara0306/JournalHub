@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - JournalHub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <!-- Animated Background -->
+    <div class="auth-background">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="auth-container">
+        <!-- Back to Home -->
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+
+        <div class="auth-card">
+            <!-- Left Side - Decorative -->
+            <div class="auth-decorative">
+                <div class="decorative-content">
+                    <i class="fas fa-book-journal-whills"></i>
+                    <h2>Welcome Back!</h2>
+                    <p>Your digital journal awaits your thoughts and memories.</p>
+                    <div class="decorative-features">
+                        <div class="feature">
+                            <i class="fas fa-lock"></i>
+                            <span>Secure & Private</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-sync"></i>
+                            <span>Auto Sync</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Access Anywhere</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login Form -->
+            <div class="auth-form-container">
+                <div class="auth-header">
+                    <div class="logo">
+                        <i class="fas fa-book-journal-whills"></i>
+                        <span>JournalHub</span>
+                    </div>
+                    <h1>Sign In</h1>
+                    <p>Continue your journaling journey</p>
+                </div>
+
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" name="username" required 
+                                   placeholder="Enter your username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" required 
+                                   placeholder="Enter your password">
+                            <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility()"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span>Sign In</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="social-login">
+                        <p>Or continue with</p>
+                        <div class="social-buttons">
+                            <button type="button" class="social-btn google">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button type="button" class="social-btn github">
+                                <i class="fab fa-github"></i>
+                            </button>
+                            <button type="button" class="social-btn twitter">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="register.html">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script>
+        // Password Visibility Toggle
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Form Submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const authToken = btoa(`${username}:${password}`);
+                const response = await fetch('/journal', {
+                    headers: {
+                        'Authorization': `Basic ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('username', username);
+                    
+                    showToast('Login successful!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    showToast('Invalid credentials', 'error');
+                }
+            } catch (error) {
+                showToast('Login failed: ' + error.message, 'error');
+            }
+        });
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Add loading animation to submit button
+        const submitBtn = document.querySelector('.btn-submit');
+        submitBtn.addEventListener('click', () => {
+            submitBtn.classList.add('loading');
+        });
+    </script>
+</body>
+</html> 

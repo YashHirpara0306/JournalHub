@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <nav class="dashboard-nav">
+        <div class="nav-brand">MyJournal</div>
+        <div class="nav-links">
+            <button id="newEntryBtn" class="btn btn-primary"><i class="fas fa-plus"></i> New Entry</button>
+            <button id="logoutBtn" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search entries...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div id="entriesList" class="entries-list">
+                <!-- Entries will be populated here -->
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="editorContainer" class="editor-container">
+                <input type="text" id="titleInput" class="title-input" placeholder="Entry Title">
+                <textarea id="contentInput" class="content-input" placeholder="Write your thoughts..."></textarea>
+                <div class="editor-actions">
+                    <button id="saveBtn" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button id="deleteBtn" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for new entries -->
+    <div id="newEntryModal" class="modal">
+        <div class="modal-content">
+            <h2>Create New Entry</h2>
+            <input type="text" id="newEntryTitle" placeholder="Entry Title">
+            <textarea id="newEntryContent" placeholder="Write your thoughts..."></textarea>
+            <div class="modal-actions">
+                <button id="createEntryBtn" class="btn btn-primary">Create</button>
+                <button id="cancelEntryBtn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html> 

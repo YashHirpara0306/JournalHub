@@ -1,0 +1,37 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://Springdb:9913258184@cluster0.objco.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journaldb
+      auto-index-creation: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  mvc:
+    static-path-pattern: /**
+  web:
+    resources:
+      static-locations: classpath:/static/
+      add-mappings: true
+      chain:
+        strategy:
+          content:
+            enabled: true
+            paths: /**
+
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+# Enable detailed logging
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG 
